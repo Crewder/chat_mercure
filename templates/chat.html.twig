@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chat!{% endblock %}
+
+{% block body %}
+    <h1>Le chat de : {{ app.user.email }}</h1>
+    {{ form_start(form) }}
+        {{ form_row(form.message) }}
+        {{ form_row(form.envoyer) }}
+    {{ form_end(form) }}
+    {{ dump(user) }}
+    {% block javascripts %}
+        <script>
+            const url = new URL('http://localhost:3000/.well-known/mercure');
+            url.searchParams.append('topic', 'http://monsite.com/ping');
+
+            const eventSource = new EventSource(url);
+
+            eventSource.onmessage = e => {
+                console.log(e.data);
+            }
+        </script>
+    {% endblock %}
+{% endblock %}
